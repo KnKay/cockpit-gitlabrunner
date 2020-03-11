@@ -1,0 +1,60 @@
+<head>
+    <title>Gitlab Runner</title>
+    <meta charset="utf-8">
+    <link href="../base1/cockpit.css" type="text/css" rel="stylesheet">
+    <link href="../base1/patternfly.css" type="text/css" rel="stylesheet">
+    <link href="runner.css" type="text/css" rel="stylesheet">
+    <script src="../base1/jquery.js"></script>
+    <script src="../base1/cockpit.js"></script>
+    <script src="./runner_list.js" ></script>
+    <script src="./runner_form.js" ></script>
+</head>
+<body>
+    <div style="margin: 10pt;">
+        <h1>Gitlab Runner</h1>
+        <hr>
+        <div>
+            <table id="runnersList" class="listing listing-ct listing-ct-wide">
+                <caption class="cockpit-caption">Active Runners
+                    <a class="card-pf-link-with-icon pull-right" role="link" tabindex="0" onclick="on()">
+                        <span class="pficon pficon-add-circle-o"></span>                        
+                        Neuer Runner
+                    </a>
+                </caption>
+                <thead>
+                    <tr>                    
+                        <th>Name</th>
+                        <th>Executor</th>
+                        <th>Token</th>
+                        <th></th>
+                    </tr>
+                </thead>                
+            </table>
+            <div id="runners"></div>
+        </div>                
+        <script>list()</script>
+    </div>
+    <div id="overlay">
+        <div id="text">New Runner
+            <form name="runnerForm">
+                <table>
+                    <tr><td>Name:</td><td><input type="text" name="name"></td></tr>
+                    <tr><td>Token:</td><td><input type="text" name="token"></td></tr>
+                    <tr><td>Server:</td><td><input type="text" name="server" value=""></td></tr>
+                    <tr><td>Executor:</td><td><input type="text" name="executor"></td></tr>
+                    <tr><td>
+                        <input type="radio" id="shell" name="type" value="shell">
+                        <label for="shell">Shell</label>
+                    </td></tr>
+                    <tr><td>
+                        <input type="radio" id="female" name="type" value="docker">
+                        <label for="docker">Docker</label>
+                    </td></tr>
+                </table>               
+                <button onclick="add()">OK</button>
+            </form>
+            <button onclick="off()">Close</button>
+        </div>
+    </div>
+</body>
+</html> 
