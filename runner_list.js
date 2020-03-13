@@ -1,5 +1,5 @@
 function list() {
-    var proc = cockpit.spawn([ "gitlab-runner", "list"], {superuser:"require", err:"out"});    
+    var proc = cockpit.spawn([ "gitlab-runner", "list"], {superuser:"require", err:"out"});
     proc.done(extract_info);
     proc.fail(log)
 }
@@ -24,17 +24,22 @@ function log(data){
     console.log(data);
 }
 
-function runner_table(runners){
-    headers = ['Name' , 'Executor', 'Token']
-    var output = document.getElementById("runners");
+function runner_table(runners){        
     var table = document.getElementById("runnersList");
-    
+    var all = document.getElementsByClassName("runner");    
+    if (all.length > 0){
+        let arry = Array.from(all)
+        arry.forEach(element => {            
+            element.remove();
+        })        
+    }
     runners.forEach(runner=>{        
         body = document.createElement("tbody");        
+        body.classList.add("runner");
         tr = body.insertRow(-1);
-        tr.classList.add("listing-ct-item");
+        tr.classList.add("listing-ct-item");        
         tr.setAttribute("data-row-id", runner.token.split('=')[1]);
-        tr.setAttribute("data", runner);
+        tr.setAttribute("data", runner);        
         var td_name = document.createElement("td");
         var td_executor = document.createElement("td");
         var td_token = document.createElement("td");
@@ -42,12 +47,30 @@ function runner_table(runners){
         td_name.innerHTML = runner.name;
         td_executor.innerHTML = runner.token.split('=')[1];
         td_token.innerHTML = runner.executor.split('=')[1];
-        empty.innerHTML="DELETE Link!";
+        empty.innerHTML="<button class=\"btn btn-danger btn-delete pficon pficon-delete\" onclick=\"ask('"+runner.name+"')\"></button>";
         tr.appendChild(td_name);
         tr.appendChild(td_executor);
         tr.appendChild(td_token);
         tr.appendChild(empty);
         table.appendChild(body);
     })
-    
+}
+
+function ask(name, token, host)
+{
+    var r = confirm("Löschen von "+name);
+    if (r == true) {
+        unregister(name, token, host);
+    } else {
+      
+    }
+}
+//ToDo: Wie macht man das?
+//We need to run the purge! 
+function unregister(name, token, host){
+    console.log(name);
+    var proc = cockpit.spawn([ "gitlab-runner", "unregister", name], {superuser:"require", err:"out"});
+    proc.done(log);
+    proc.fail(log);
+    list();
 }
