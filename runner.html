@@ -39,14 +39,14 @@
             <form name="runnerForm">
                 <table>
                     <tr><td><p class="formText">Name:</p></td><td><input type="text" name="name"></td></tr>
-                    <tr><td><p class="formText">Token:</p></td><td><input type="text" name="token"></td></tr>
                     <tr><td><p class="formText">Server:</p></td><td><input type="text" name="server" value=""></td></tr>
-                    <tr><td><p class="formText">Executor:</p></td><td><input type="text" name="executor"></td></tr>
-                    <tr><td>
+                    <tr><td><p class="formText">Token:</p></td><td><input type="text" name="token"></td></tr>                    
+                    <tr><td><p class="formText">Tags:</p></td><td><input type="text" name="tags"></td></tr>                    
+                    <tr><td><p class="formText">Executor:</p></td><td>
+                    
                         <input type="radio" id="shell" name="type" value="shell" onclick="shell_selected()">
                         <label for="shell"  class="formText">Shell</label>
-                    </td></tr>
-                    <tr><td>
+                        <br>
                         <input type="radio" id="female" name="type" value="docker" onclick="docker_selected()"">
                         <label for="docker"  class="formText">Docker</label>
                     </td></tr>
