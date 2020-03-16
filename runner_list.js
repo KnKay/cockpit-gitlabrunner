@@ -69,8 +69,14 @@ function ask(name, token, host)
 //We need to run the purge! 
 function unregister(name, token, host){
     console.log(name);
-    var proc = cockpit.spawn([ "gitlab-runner", "unregister", name], {superuser:"require", err:"out"});
-    proc.done(log);
+    var proc = cockpit.spawn([ "gitlab-runner", "unregister","--name", name], {superuser:"require", err:"out"});
+    proc.done(unregistered);
     proc.fail(log);
+}
+
+function unregistered(data)
+{
+    log(data);
     list();
 }
+
